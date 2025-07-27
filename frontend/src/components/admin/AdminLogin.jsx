@@ -6,8 +6,6 @@ import Card from '../Card';
 import { FiUser, FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
 import '../../styles/Admin.css';
 
-
-
 const AdminLogin = ({ onLoginSuccess }) => {
   const [credentials, setCredentials] = useState({
     username: '',
@@ -16,6 +14,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [debugInfo, setDebugInfo] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -29,17 +28,24 @@ const AdminLogin = ({ onLoginSuccess }) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    setDebugInfo('');
 
     try {
-      await adminService.login(credentials.username, credentials.password);
+      const result = await adminService.login(credentials.username, credentials.password);
       showSuccess('Login successful!');
       setMessage('Login successful! Redirecting...');
+      
+      // Get session status for debugging
+      const sessionStatus = adminService.getSessionStatus();
+      setDebugInfo(`Session Status: ${JSON.stringify(sessionStatus, null, 2)}`);
+      
       setTimeout(() => {
         onLoginSuccess();
       }, 1000);
     } catch (error) {
       showError(error.message);
       setMessage(error.message);
+      setDebugInfo(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -104,6 +110,20 @@ const AdminLogin = ({ onLoginSuccess }) => {
           {message && (
             <div className={`admin-message ${message.includes('error') || message.includes('failed') ? 'error' : ''}`}>
               {message}
+            </div>
+          )}
+
+          {debugInfo && (
+            <div className="admin-debug-info" style={{ 
+              background: '#f0f0f0', 
+              padding: '10px', 
+              margin: '10px 0', 
+              borderRadius: '5px', 
+              fontSize: '12px',
+              fontFamily: 'monospace',
+              whiteSpace: 'pre-wrap'
+            }}>
+              {debugInfo}
             </div>
           )}
 
