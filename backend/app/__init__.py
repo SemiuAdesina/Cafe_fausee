@@ -16,6 +16,7 @@ def create_app():
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    # Don't set domain - let Flask handle it automatically
     
     # Custom CORS handler to ensure credentials are properly handled
     @app.after_request

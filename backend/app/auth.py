@@ -72,8 +72,39 @@ def debug_session():
             'session_id': session.get('admin_id'),
             'session_keys': list(session.keys()),
             'cookies': dict(request.cookies),
-            'headers': dict(request.headers)
+            'headers': dict(request.headers),
+            'admin_id_in_session': session.get('admin_id'),
+            'session_modified': session.modified
         }
         return jsonify(session_data), 200
     except Exception as e:
         return jsonify({'error': f'Session debug failed: {str(e)}'}), 500
+
+@admin_auth_bp.route('/api/admin/test-session', methods=['GET'])
+def test_session():
+    """Test if session is working properly"""
+    try:
+        # Check if admin is logged in
+        admin_id = session.get('admin_id')
+        if admin_id:
+            admin = Admin.query.get(admin_id)
+            if admin:
+                return jsonify({
+                    'logged_in': True,
+                    'username': admin.username,
+                    'session_id': admin_id
+                }), 200
+            else:
+                # Admin not found in database
+                session.pop('admin_id', None)
+                return jsonify({
+                    'logged_in': False,
+                    'error': 'Admin not found in database'
+                }), 200
+        else:
+            return jsonify({
+                'logged_in': False,
+                'error': 'No admin_id in session'
+            }), 200
+    except Exception as e:
+        return jsonify({'error': f'Session test failed: {str(e)}'}), 500
