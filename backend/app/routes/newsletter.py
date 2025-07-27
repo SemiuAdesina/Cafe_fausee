@@ -174,3 +174,28 @@ def export_newsletter_csv():
         mimetype='text/csv',
         headers={'Content-Disposition': 'attachment;filename=newsletter_signups.csv'}
     )
+
+@newsletter_bp.route('/migrate-db', methods=['GET'])
+def migrate_database():
+    """Create database tables via HTTP request"""
+    try:
+        from sqlalchemy import text
+        
+        # Create all tables
+        db.create_all()
+        
+        # Test the connection
+        db.session.execute(text('SELECT 1'))
+        
+        # Check if newsletter table exists
+        count = Newsletter.query.count()
+        
+        return jsonify({
+            'message': 'Database migration successful',
+            'newsletter_count': count,
+            'table_exists': True
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'error': f'Database migration failed: {str(e)}'
+        }), 500
