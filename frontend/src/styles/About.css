@@ -1,0 +1,283 @@
+/* About Page Styles */
+
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+/* Dark theme support for page title */
+.theme-dark .page-title {
+  color: #f8fafc;
+}
+
+.about-container p {
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.about-container h3 {
+  color: #0078ff;
+  border-bottom: 2px solid #00ffc8;
+  padding-bottom: 0.5rem;
+  margin: 2rem 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.about-container ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.about-container li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.about-container li:last-child {
+  border-bottom: none;
+}
+
+.about-container strong {
+  color: #0078ff;
+  font-weight: 600;
+}
+
+/* Dark theme support for about content */
+.theme-dark .about-container p {
+  color: #f8fafc;
+}
+
+.theme-dark .about-container h3 {
+  color: #00ffc8;
+  border-bottom-color: #0078ff;
+}
+
+.theme-dark .about-container li {
+  color: #f8fafc;
+  border-bottom-color: #374151;
+}
+
+.theme-dark .about-container strong {
+  color: #00ffc8;
+}
+
+/* Loading and empty states */
+.loading-message,
+.error-message,
+.empty-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  color: #0078ff;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.empty-message {
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* Dark theme support for loading states */
+.theme-dark .loading-message,
+.theme-dark .error-message,
+.theme-dark .empty-message {
+  color: #d1d5db;
+}
+
+.theme-dark .loading-message {
+  color: #00ffc8;
+}
+
+.theme-dark .error-message {
+  color: #f87171;
+}
+
+.theme-dark .empty-message {
+  color: #9ca3af;
+}
+
+/* About Hero Section */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.about-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.about-hero-overlay h3 {
+  color: white;
+  border-bottom: none;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.about-hero-overlay p {
+  color: #e0e7ef;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Team Section */
+.about-team-section {
+  margin: 2rem 0;
+}
+
+.about-team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.about-team-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-team-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center 25%;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.about-team-image:hover {
+  transform: scale(1.02);
+}
+
+.about-team-content h4 {
+  color: #0078ff;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.about-team-content p {
+  margin: 0;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Dark theme support for new elements */
+.theme-dark .about-hero-overlay h3 {
+  color: #f8fafc;
+}
+
+.theme-dark .about-hero-overlay p {
+  color: #d1d5db;
+}
+
+.theme-dark .about-team-content h4 {
+  color: #00ffc8;
+}
+
+.theme-dark .about-team-content p {
+  color: #d1d5db;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .about-container p {
+    font-size: 1rem;
+  }
+  
+  .about-container h3 {
+    font-size: 1.25rem;
+  }
+  
+  .about-hero {
+    height: 350px;
+  }
+  
+  .about-hero-overlay {
+    padding: 1rem;
+  }
+  
+  .about-hero-overlay h3 {
+    font-size: 1.4rem;
+  }
+  
+  .about-hero-overlay p {
+    font-size: 1rem;
+  }
+  
+  .about-team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .about-team-image {
+    height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 0.5rem;
+  }
+  
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .about-container p {
+    font-size: 0.95rem;
+  }
+  
+  .about-container li {
+    font-size: 0.9rem;
+  }
+} 

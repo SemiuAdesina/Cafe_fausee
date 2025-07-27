@@ -1,0 +1,56 @@
+.reservations-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 8px;
+}
+
+.page-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  padding-top: 72px;
+  margin-top: 0;
+}
+
+/* Dark theme support for page title */
+.theme-dark .page-title {
+  color: #f8fafc;
+}
+@media (max-width: 900px) {
+  .page-title {
+    padding-top: 56px;
+    font-size: 2rem;
+  }
+  .reservations-container {
+    padding: 16px 4px;
+    max-width: 100vw;
+  }
+  .sc-bcXHqe, .card {
+    padding: 14px 8px !important;
+    margin: 10px 0 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+  }
+  input, button {
+    font-size: 15px !important;
+    padding: 8px 10px !important;
+  }
+}
+@media (max-width: 600px) {
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .reservations-container {
+    padding: 8px 2px;
+  }
+  .sc-bcXHqe, .card {
+    padding: 8px 4px !important;
+    margin: 7px 0 !important;
+  }
+  input, button {
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+  }
+} 

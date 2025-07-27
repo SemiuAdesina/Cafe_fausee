@@ -1,0 +1,137 @@
+.footer {
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 32px 16px 8px 16px;
+  text-align: center;
+  margin-top: 32px;
+}
+.footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
+  text-align: left;
+}
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 19.2px;
+  min-width: 220px;
+}
+.footer-newsletter {
+  max-width: 350px;
+  margin: 0 auto;
+  flex: 1;
+}
+.footer-copyright {
+  border-top: 1px solid #222;
+  margin-top: 24px;
+  padding-top: 16px;
+  font-size: 16px;
+  color: #b0b8c1;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 19.2px;
+}
+.footer-nav a {
+  color: #00ffc8;
+  font-weight: 500;
+  font-size: 17.28px;
+  text-decoration: none;
+  padding: 8px 19.2px;
+  border-radius: 11.2px;
+  background: rgba(0,255,200,0.08);
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,255,200,0.06);
+}
+.footer-nav a:hover {
+  background: linear-gradient(90deg, #00ffc8 0%, #0078ff 100%);
+  color: #fff;
+}
+.footer-brand {
+  font-size: 20.8px;
+  font-weight: bold;
+  color: #00ffc8;
+  margin-bottom: 11.2px;
+}
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6.4px;
+  font-size: 17.28px;
+  color: #f8fafc;
+}
+.footer-label {
+  font-weight: 600;
+  color: #00ffc8;
+  margin-right: 8px;
+}
+@media (max-width: 800px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 19.2px;
+    text-align: center;
+  }
+  .footer-content {
+    align-items: center;
+    text-align: center;
+  }
+  .footer-info {
+    align-items: center;
+    font-size: 13px;
+  }
+  .footer-brand {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .footer-label {
+    font-size: 12px;
+  }
+  .footer-nav a {
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+  .footer-copyright {
+    font-size: 12px;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    min-height: 32px;
+    text-align: center;
+    display: block;
+  }
+}
+@media (max-width: 600px) {
+  .footer {
+    padding: 24px 4px 24px 4px;
+  }
+  .footer-info {
+    font-size: 11px;
+  }
+  .footer-brand {
+    font-size: 12px;
+  }
+  .footer-label {
+    font-size: 10px;
+  }
+  .footer-nav a {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+  .footer-copyright {
+    font-size: 10px;
+    padding-top: 4px;
+    padding-bottom: 20px;
+    min-height: 36px;
+    text-align: center;
+    display: block;
+  }
+} 

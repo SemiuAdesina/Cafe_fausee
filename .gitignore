@@ -1,0 +1,79 @@
+# Root level .gitignore for Café Fausse project
+# This file ignores project-wide files
+
+# Environment Variables (root level)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Backup files
+*.bak
+*.backup
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
+*.log
+logs/
+
+# Local development
+.local/
+local/
+
+# Documentation build
+docs/_build/
+
+# Project-specific
+# Note: Backend and Frontend have their own .gitignore files
+# See backend/.gitignore and frontend/.gitignore for specific rules
+
+# Deployment files (keep these for Render)
+# render.yaml files are kept for deployment
+# .render-buildlogs/ is ignored in backend/.gitignore
+
+# Local configuration overrides
+config.local.*
+secrets.json
+secrets.yaml
+secrets.yml
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Docker
+.dockerignore
+Dockerfile.local
+docker-compose.override.yml
+
+# Local development tools
+.history/
+.vscode-server/ 

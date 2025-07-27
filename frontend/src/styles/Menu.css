@@ -1,0 +1,211 @@
+/* Menu Page Styles */
+
+.menu-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+/* Dark theme support for page title */
+.theme-dark .page-title {
+  color: #f8fafc;
+}
+
+.menu-section {
+  margin-bottom: 2rem;
+}
+
+.menu-section h3 {
+  color: #0078ff;
+  border-bottom: 2px solid #00ffc8;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.menu-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+.menu-item-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.menu-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.menu-item-image img:hover {
+  transform: scale(1.05);
+}
+
+.menu-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.item-desc {
+  color: #666;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Dark theme support for menu items */
+.theme-dark .item-name {
+  color: #f8fafc;
+}
+
+.theme-dark .item-desc {
+  color: #d1d5db;
+}
+
+.item-price {
+  font-weight: bold;
+  color: #0078ff;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+/* Loading and empty states */
+.loading-message,
+.error-message,
+.empty-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  color: #0078ff;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.empty-message {
+  font-style: italic;
+  color: #6b7280;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.empty-message p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.empty-message p:first-child {
+  font-weight: 500;
+  color: #374151;
+}
+
+.empty-message p:last-child {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Dark theme support for loading states */
+.theme-dark .loading-message,
+.theme-dark .error-message,
+.theme-dark .empty-message {
+  color: #d1d5db;
+}
+
+.theme-dark .loading-message {
+  color: #00ffc8;
+}
+
+.theme-dark .error-message {
+  color: #f87171;
+}
+
+.theme-dark .empty-message {
+  color: #9ca3af;
+}
+
+.theme-dark .empty-message p:first-child {
+  color: #d1d5db;
+}
+
+.theme-dark .empty-message p:last-child {
+  color: #9ca3af;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .menu-item {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    text-align: left;
+  }
+  
+
+  
+  .item-price {
+    text-align: right;
+  }
+  
+  .menu-item-image {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-container {
+    padding: 0.5rem;
+  }
+  
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .menu-section h3 {
+    font-size: 1.25rem;
+  }
+} 
