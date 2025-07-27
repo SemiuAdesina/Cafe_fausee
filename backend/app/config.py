@@ -26,5 +26,5 @@ class Config:
     # Session configuration for production
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'None' to 'Lax' for better cross-origin support
     SESSION_COOKIE_DOMAIN = None  # Let Flask set this automatically

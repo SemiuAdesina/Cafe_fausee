@@ -15,7 +15,7 @@ def create_app():
     # Configure session for production
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_HTTPONLY'] = True
-    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Changed from 'None' to 'Lax' for better cross-origin support
     # Let Flask handle domain automatically
     
     # Custom CORS handler to ensure credentials are properly handled
