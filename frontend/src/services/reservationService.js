@@ -32,7 +32,8 @@ export const reservationService = {
 
   // Export reservations as CSV (admin only)
   exportReservationsCSV: async () => {
-    const response = await fetch('http://localhost:5001/api/reservations/export', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const response = await fetch(`${apiUrl}/reservations/export`, {
       credentials: 'include', // Include cookies for admin session
     });
     

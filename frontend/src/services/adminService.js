@@ -4,7 +4,8 @@ import apiRequest from './apiConfig.js';
 export const adminService = {
   // Admin login
   login: async (username, password) => {
-    const response = await fetch('http://localhost:5001/api/admin/login', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+    const response = await fetch(`${apiUrl}/admin/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +24,8 @@ export const adminService = {
 
   // Admin logout
   logout: async () => {
-    const response = await fetch('http://localhost:5001/api/admin/logout', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+    const response = await fetch(`${apiUrl}/admin/logout`, {
       method: 'POST',
       credentials: 'include', // Include cookies for session management
     });
@@ -39,8 +41,9 @@ export const adminService = {
   // Check if admin is logged in
   isLoggedIn: async () => {
     try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
       // Use the dedicated admin status endpoint
-      const response = await fetch('http://localhost:5001/api/admin/status', {
+      const response = await fetch(`${apiUrl}/admin/status`, {
         credentials: 'include',
       });
       

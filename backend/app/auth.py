@@ -33,3 +33,33 @@ def admin_status():
                 'username': admin.username
             }), 200
     return jsonify({'logged_in': False}), 200
+
+@admin_auth_bp.route('/api/admin/create', methods=['POST'])
+def create_admin():
+    """Create admin user via HTTP request (for production setup)"""
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        if not username or not password:
+            return jsonify({'error': 'Username and password required.'}), 400
+            
+        # Check if admin already exists
+        existing_admin = Admin.query.filter_by(username=username).first()
+        if existing_admin:
+            return jsonify({'error': f'Admin user "{username}" already exists.'}), 409
+        
+        # Create new admin
+        admin = Admin(username=username)
+        admin.set_password(password)
+        db.session.add(admin)
+        db.session.commit()
+        
+        return jsonify({
+            'message': f'Admin user "{username}" created successfully.',
+            'username': username
+        }), 201
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to create admin: {str(e)}'}), 500

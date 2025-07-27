@@ -17,7 +17,8 @@ export const newsletterService = {
 
   // Export newsletter signups as CSV (admin only)
   exportNewsletterCSV: async () => {
-    const response = await fetch('http://localhost:5001/api/newsletter/export', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const response = await fetch(`${apiUrl}/newsletter/export`, {
       credentials: 'include', // Include cookies for admin session
     });
     
