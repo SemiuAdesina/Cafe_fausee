@@ -74,7 +74,10 @@ def debug_session():
             'cookies': dict(request.cookies),
             'headers': dict(request.headers),
             'admin_id_in_session': session.get('admin_id'),
-            'session_modified': session.modified
+            'session_modified': session.modified,
+            'origin': request.headers.get('Origin'),
+            'referer': request.headers.get('Referer'),
+            'user_agent': request.headers.get('User-Agent')
         }
         return jsonify(session_data), 200
     except Exception as e:
@@ -106,5 +109,20 @@ def test_session():
                 'logged_in': False,
                 'error': 'No admin_id in session'
             }), 200
+    except Exception as e:
+        return jsonify({'error': f'Session test failed: {str(e)}'}), 500
+
+@admin_auth_bp.route('/api/admin/session-test', methods=['GET'])
+def session_test():
+    """Simple test to check if session cookies are being sent"""
+    try:
+        return jsonify({
+            'message': 'Session test endpoint',
+            'has_session_cookie': 'session' in request.cookies,
+            'session_cookie_value': request.cookies.get('session', 'None'),
+            'all_cookies': dict(request.cookies),
+            'origin': request.headers.get('Origin'),
+            'user_agent': request.headers.get('User-Agent')
+        }), 200
     except Exception as e:
         return jsonify({'error': f'Session test failed: {str(e)}'}), 500
