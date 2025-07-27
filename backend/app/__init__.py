@@ -17,7 +17,17 @@ def create_app():
     def after_request(response):
         origin = request.headers.get('Origin')
         print(f"Request origin: {origin}")  # Debug print
-        if origin in ['http://localhost:5173', 'http://127.0.0.1:5173']:
+        
+        # Allow origins for both development and production
+        allowed_origins = [
+            'http://localhost:5173', 
+            'http://127.0.0.1:5173',
+            'https://cafe-fausse-z85a.onrender.com',  # Your Render frontend URL
+            'https://cafe-fausse-frontend.onrender.com',
+            'https://cafe-fausse.onrender.com'
+        ]
+        
+        if origin in allowed_origins:
             response.headers['Access-Control-Allow-Origin'] = origin
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'

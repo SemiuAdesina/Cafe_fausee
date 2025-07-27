@@ -21,8 +21,9 @@ class Config:
     CORS_ORIGINS = [
         'http://localhost:5173',
         'http://localhost:3000',
-        'https://cafe-fausse-frontend.onrender.com',  # Update with your frontend URL
-        'https://cafe-fausse.onrender.com'  # Update with your frontend URL
+        'https://cafe-fausse-z85a.onrender.com',  # Your actual frontend URL
+        'https://cafe-fausse-frontend.onrender.com',
+        'https://cafe-fausse.onrender.com'
     ]
 
 class DevelopmentConfig(Config):
