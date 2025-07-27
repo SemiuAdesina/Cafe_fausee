@@ -394,6 +394,30 @@
   top: 1.5rem;   /* 24px */
   right: 1.5rem; /* 24px */
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  color: #0078ff;
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 120, 255, 0.2);
+}
+
+.close-btn:hover {
+  background: rgba(0, 120, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.close-btn:active {
+  background: rgba(0, 120, 255, 0.2);
+  transform: scale(0.95);
 }
 
 .close-icon.dark {
@@ -503,6 +527,14 @@
   
   /* Extra small screen menu toggle improvements */
   .navbar-menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  /* Extra small screen close button improvements */
+  .close-btn {
     min-width: 44px;
     min-height: 44px;
     padding: 10px;
