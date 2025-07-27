@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FiSearch, FiFilter, FiX } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
+import { FaFilter, FaTimes, FaSlidersH } from 'react-icons/fa';
 import { debounce } from '../services/utils.js';
 import '../styles/SearchFilter.css';
 
@@ -72,7 +73,7 @@ const SearchFilter = ({
               onClick={clearSearch}
               title="Clear search"
             >
-              <FiX />
+              <FaTimes />
             </button>
           )}
         </div>
@@ -85,7 +86,7 @@ const SearchFilter = ({
             className={`filter-toggle ${showFilterDropdown ? 'active' : ''}`}
             onClick={() => setShowFilterDropdown(!showFilterDropdown)}
           >
-            {showFilterDropdown ? <FiX /> : <FiFilter />}
+            {showFilterDropdown ? <FaTimes /> : <FaSlidersH />}
             {showFilterDropdown ? 'Close Filters' : 'Filters'}
             {getActiveFilterCount() > 0 && (
               <span className="filter-badge">{getActiveFilterCount()}</span>
@@ -101,6 +102,7 @@ const SearchFilter = ({
                     className="clear-filters-btn"
                     onClick={clearAllFilters}
                   >
+                    <FaTimes />
                     Clear All
                   </button>
                 )}
