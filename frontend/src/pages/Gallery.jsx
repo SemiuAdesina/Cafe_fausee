@@ -3,8 +3,6 @@ import Card from '../components/Card';
 import { galleryService } from '../services/index.js';
 import { showError } from '../services/utils.js';
 import '../styles/Gallery.css';
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
 import cafeInterior from '../assets/gallery-cafe-interior.webp';
 import ribeyeSteak from '../assets/gallery-ribeye-steak.webp';
 import specialEvent from '../assets/gallery-special-event.webp';
@@ -33,16 +31,12 @@ const staticReviews = [
   { content: 'A must-visit restaurant for food enthusiasts.', author: 'The Daily Bite' },
 ];
 
-
-
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [awards, setAwards] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [useBackend, setUseBackend] = useState(false);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
 
   useEffect(() => {
     const loadGalleryData = async () => {
@@ -81,11 +75,6 @@ const Gallery = () => {
     loadGalleryData();
   }, []);
 
-  const openLightbox = idx => {
-    setPhotoIndex(idx);
-    setLightboxOpen(true);
-  };
-
   if (loading) {
     return (
       <div className="gallery-container">
@@ -110,24 +99,10 @@ const Gallery = () => {
                 src={img.image_url}
                 alt={img.title || img.description}
                 className="gallery-img"
-                style={{ cursor: 'pointer' }}
-                onClick={() => openLightbox(idx)}
               />
             ))}
           </div>
         </Card>
-      )}
-
-      {lightboxOpen && images.length > 0 && (
-        <Lightbox
-          mainSrc={images[photoIndex].image_url}
-          nextSrc={images[(photoIndex + 1) % images.length].image_url}
-          prevSrc={images[(photoIndex + images.length - 1) % images.length].image_url}
-          onCloseRequest={() => setLightboxOpen(false)}
-          onMovePrevRequest={() => setPhotoIndex((photoIndex + images.length - 1) % images.length)}
-          onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % images.length)}
-          imageCaption={images[photoIndex].title || images[photoIndex].description}
-        />
       )}
 
       {awards.length > 0 && (
@@ -135,13 +110,13 @@ const Gallery = () => {
           <section className="gallery-awards">
             <h3>Awards</h3>
             <ul>
-                          {awards.map((award, index) => (
-              <li key={useBackend ? award.id : `static-award-${index}`}>
-                <strong>{award.title}</strong>
-                {award.year && ` – ${award.year}`}
-                {award.description && ` – ${award.description}`}
-              </li>
-            ))}
+              {awards.map((award, index) => (
+                <li key={useBackend ? award.id : `static-award-${index}`}>
+                  <strong>{award.title}</strong>
+                  {award.year && ` – ${award.year}`}
+                  {award.description && ` – ${award.description}`}
+                </li>
+              ))}
             </ul>
           </section>
         </Card>
@@ -152,13 +127,13 @@ const Gallery = () => {
           <section className="gallery-reviews">
             <h3>Customer Reviews</h3>
             <ul>
-                          {reviews.map((review, index) => (
-              <li key={useBackend ? review.id : `static-review-${index}`}>
-                <blockquote>"{review.content}"</blockquote>
-                <cite>– {review.author}</cite>
-                {review.source && <span className="review-source"> ({review.source})</span>}
-              </li>
-            ))}
+              {reviews.map((review, index) => (
+                <li key={useBackend ? review.id : `static-review-${index}`}>
+                  <blockquote>"{review.content}"</blockquote>
+                  <cite>– {review.author}</cite>
+                  {review.source && <span className="review-source"> ({review.source})</span>}
+                </li>
+              ))}
             </ul>
           </section>
         </Card>
