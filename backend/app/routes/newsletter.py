@@ -58,6 +58,26 @@ The Café Fausse Team
         print(f"❌ Failed to send welcome email: {e}")
         return False
 
+@newsletter_bp.route('/test-db', methods=['GET'])
+def test_database():
+    """Test database connection and Newsletter table"""
+    try:
+        # Test database connection
+        db.session.execute('SELECT 1')
+        
+        # Test Newsletter table
+        count = Newsletter.query.count()
+        
+        return jsonify({
+            'message': 'Database connection successful',
+            'newsletter_count': count,
+            'table_exists': True
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'error': f'Database test failed: {str(e)}'
+        }), 500
+
 @newsletter_bp.route('/test-email', methods=['GET'])
 def test_email_config():
     """Test email configuration"""
@@ -95,13 +115,19 @@ def test_newsletter():
 def signup_newsletter():
     try:
         data = request.get_json()
+        print(f"Received newsletter signup data: {data}")
+        
         email = data.get('email')
         if not email:
             return jsonify({'error': 'Email is required.'}), 400
+            
         email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         if not re.match(email_regex, email):
             return jsonify({'error': 'Invalid email format.'}), 400
-        if Newsletter.query.filter_by(email=email).first():
+            
+        # Check if email already exists
+        existing = Newsletter.query.filter_by(email=email).first()
+        if existing:
             return jsonify({'error': 'Email already signed up.'}), 409
         
         # Create newsletter signup
@@ -109,18 +135,15 @@ def signup_newsletter():
         db.session.add(newsletter)
         db.session.commit()
         
-        # Try to send welcome email (but don't fail if it doesn't work)
-        try:
-            print(f"Attempting to send welcome email to: {email}")
-            send_welcome_email(email)
-        except Exception as email_error:
-            print(f"❌ Email sending failed but signup succeeded: {email_error}")
-            # Continue with success response even if email fails
+        print(f"✅ Newsletter signup successful for: {email}")
         
         return jsonify({'message': 'Signed up for newsletter successfully.'}), 201
+        
     except Exception as e:
         print(f"❌ Newsletter signup error: {e}")
-        return jsonify({'error': 'Internal server error'}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
 @newsletter_bp.route('/all', methods=['GET'])
 def get_all_newsletter_signups():
