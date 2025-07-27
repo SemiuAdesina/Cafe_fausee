@@ -215,6 +215,14 @@ def migrate_database_public():
     try:
         from sqlalchemy import text
         
+        # Drop and recreate admin table to fix schema
+        try:
+            db.session.execute(text('DROP TABLE IF EXISTS admin CASCADE'))
+            db.session.commit()
+            print("✅ Dropped existing admin table")
+        except Exception as e:
+            print(f"⚠️ Error dropping admin table: {e}")
+        
         # Create all tables
         db.create_all()
         
@@ -225,7 +233,7 @@ def migrate_database_public():
         count = Newsletter.query.count()
         
         return jsonify({
-            'message': 'Database migration successful',
+            'message': 'Database migration successful - admin table recreated',
             'newsletter_count': count,
             'table_exists': True
         }), 200
