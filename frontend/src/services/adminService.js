@@ -1,4 +1,5 @@
 import apiRequest from './apiConfig.js';
+import sessionManager from './sessionManager.js';
 
 // Admin Service
 export const adminService = {
@@ -19,6 +20,8 @@ export const adminService = {
       throw new Error(errorData.error || `HTTP ${response.status}`);
     }
 
+    // Set authentication state
+    sessionManager.setAuthenticated(true);
     return response.json();
   },
 
@@ -35,20 +38,28 @@ export const adminService = {
       throw new Error(errorData.error || `HTTP ${response.status}`);
     }
 
+    // Clear authentication state
+    sessionManager.clearSession();
     return response.json();
   },
 
   // Check if admin is logged in
   isLoggedIn: async () => {
     try {
+      // First check local session state
+      if (sessionManager.isLoggedIn()) {
+        return true;
+      }
+
+      // Then check with server
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-      // Use the dedicated admin status endpoint
       const response = await fetch(`${apiUrl}/admin/status`, {
         credentials: 'include',
       });
       
       if (response.ok) {
         const data = await response.json();
+        sessionManager.setAuthenticated(data.logged_in);
         return data.logged_in;
       }
       return false;
@@ -56,6 +67,11 @@ export const adminService = {
       console.error('Error checking admin login status:', error);
       return false;
     }
+  },
+
+  // Get session status
+  getSessionStatus: () => {
+    return sessionManager.getSessionStatus();
   },
 
   // Health check
