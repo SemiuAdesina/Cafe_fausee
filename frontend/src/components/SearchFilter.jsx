@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiSearch, FiFilter, FiX, FiFunnel } from 'react-icons/fi';
+import { FiSearch, FiFilter, FiX } from 'react-icons/fi';
 import { debounce } from '../services/utils.js';
 import '../styles/SearchFilter.css';
 
@@ -85,7 +85,7 @@ const SearchFilter = ({
             className={`filter-toggle ${showFilterDropdown ? 'active' : ''}`}
             onClick={() => setShowFilterDropdown(!showFilterDropdown)}
           >
-            {showFilterDropdown ? <FiFunnel /> : <FiFilter />}
+            {showFilterDropdown ? <FiX /> : <FiFilter />}
             {showFilterDropdown ? 'Close Filters' : 'Filters'}
             {getActiveFilterCount() > 0 && (
               <span className="filter-badge">{getActiveFilterCount()}</span>
