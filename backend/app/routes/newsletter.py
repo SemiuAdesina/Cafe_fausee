@@ -7,6 +7,10 @@ from app import mail
 
 newsletter_bp = Blueprint('newsletter', __name__)
 
+@newsletter_bp.route('/simple-test', methods=['GET'])
+def simple_test():
+    return {"message": "Simple test route working!"}, 200
+
 def send_welcome_email(email):
     """Send welcome email to new newsletter subscribers"""
     try:
