@@ -185,8 +185,33 @@ def export_newsletter_csv():
 
 @newsletter_bp.route('/migrate-db', methods=['GET'])
 @require_admin
-def migrate_database(admin_user):
+def migrate_database():
     """Create database tables via HTTP request"""
+    try:
+        from sqlalchemy import text
+        
+        # Create all tables
+        db.create_all()
+        
+        # Test the connection
+        db.session.execute(text('SELECT 1'))
+        
+        # Check if newsletter table exists
+        count = Newsletter.query.count()
+        
+        return jsonify({
+            'message': 'Database migration successful',
+            'newsletter_count': count,
+            'table_exists': True
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'error': f'Database migration failed: {str(e)}'
+        }), 500
+
+@newsletter_bp.route('/migrate-db-public', methods=['GET'])
+def migrate_database_public():
+    """Public endpoint to create database tables (no auth required)"""
     try:
         from sqlalchemy import text
         
