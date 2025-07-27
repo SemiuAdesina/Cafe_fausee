@@ -5,6 +5,7 @@ import random
 import re
 from flask_mail import Message
 from app import mail
+from app.auth import require_admin
 import os
 
 reservations_bp = Blueprint('reservations', __name__)
@@ -215,9 +216,8 @@ def test_reservations():
     return {"message": "Reservations endpoint is working!"}, 200
 
 @reservations_bp.route('/all', methods=['GET'])
+@require_admin
 def get_all_reservations():
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     reservations = Reservation.query.all()
     result = []
     for r in reservations:
@@ -319,42 +319,40 @@ def create_reservation():
         return jsonify({'error': 'Internal server error'}), 500
 
 @reservations_bp.route('/<int:reservation_id>', methods=['PUT'])
+@require_admin
 def update_reservation(reservation_id):
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     reservation = Reservation.query.get(reservation_id)
     if not reservation:
         return jsonify({'error': 'Reservation not found.'}), 404
+    
     data = request.get_json()
-    # Only allow updating time_slot, number_of_guests, table_number
     if 'time_slot' in data:
         try:
-            time_slot_dt = datetime.fromisoformat(data['time_slot'])
-            reservation.time_slot = time_slot_dt
-        except Exception:
-            return jsonify({'error': 'Invalid time_slot format. Use ISO format.'}), 400
-    if 'number_of_guests' in data:
-        reservation.number_of_guests = data['number_of_guests']
+            reservation.time_slot = datetime.fromisoformat(data['time_slot'])
+        except:
+            return jsonify({'error': 'Invalid time_slot format.'}), 400
     if 'table_number' in data:
         reservation.table_number = data['table_number']
+    if 'number_of_guests' in data:
+        reservation.number_of_guests = data['number_of_guests']
+    
     db.session.commit()
-    return jsonify({'message': 'Reservation updated.'}), 200
+    return jsonify({'message': 'Reservation updated successfully.'}), 200
 
 @reservations_bp.route('/<int:reservation_id>', methods=['DELETE'])
+@require_admin
 def delete_reservation(reservation_id):
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     reservation = Reservation.query.get(reservation_id)
     if not reservation:
         return jsonify({'error': 'Reservation not found.'}), 404
+    
     db.session.delete(reservation)
     db.session.commit()
-    return jsonify({'message': 'Reservation deleted.'}), 200
+    return jsonify({'message': 'Reservation deleted successfully.'}), 200
 
 @reservations_bp.route('/export', methods=['GET'])
+@require_admin
 def export_reservations_csv():
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     reservations = Reservation.query.all()
     csv_data = 'id,customer_name,email,phone,time_slot,table_number,number_of_guests\n'
     for r in reservations:

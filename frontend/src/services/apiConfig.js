@@ -2,9 +2,19 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 // Common headers for API requests
-export const getHeaders = () => ({
-  'Content-Type': 'application/json',
-});
+export const getHeaders = () => {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  
+  // Add auth token if available
+  const adminToken = localStorage.getItem('admin_token');
+  if (adminToken) {
+    headers['Authorization'] = `Bearer ${adminToken}`;
+  }
+  
+  return headers;
+};
 
 // Common error handler
 export const handleApiError = (error) => {

@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 from flask_mail import Message
 from app import mail
+from app.auth import require_admin
 
 newsletter_bp = Blueprint('newsletter', __name__)
 
@@ -63,7 +64,8 @@ The Café Fausse Team
         return False
 
 @newsletter_bp.route('/test-db', methods=['GET'])
-def test_database():
+@require_admin
+def test_database(admin_user):
     """Test database connection and Newsletter table"""
     try:
         from sqlalchemy import text
@@ -85,7 +87,8 @@ def test_database():
         }), 500
 
 @newsletter_bp.route('/test-email', methods=['GET'])
-def test_email_config():
+@require_admin
+def test_email_config(admin_user):
     """Test email configuration"""
     try:
         from app import mail
@@ -159,9 +162,8 @@ def signup_newsletter():
         return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
 @newsletter_bp.route('/all', methods=['GET'])
+@require_admin
 def get_all_newsletter_signups():
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     signups = Newsletter.query.all()
     return jsonify([
         {'id': n.id, 'email': n.email, 'signup_date': n.signup_date.isoformat() if n.signup_date else None}
@@ -169,9 +171,8 @@ def get_all_newsletter_signups():
     ]), 200
 
 @newsletter_bp.route('/export', methods=['GET'])
+@require_admin
 def export_newsletter_csv():
-    if not session.get('admin_id'):
-        return jsonify({'error': 'Admin login required.'}), 401
     signups = Newsletter.query.all()
     csv_data = 'id,email,signup_date\n'
     for n in signups:
@@ -183,7 +184,8 @@ def export_newsletter_csv():
     )
 
 @newsletter_bp.route('/migrate-db', methods=['GET'])
-def migrate_database():
+@require_admin
+def migrate_database(admin_user):
     """Create database tables via HTTP request"""
     try:
         from sqlalchemy import text

@@ -20,17 +20,35 @@ export const adminService = {
       throw new Error(errorData.error || `HTTP ${response.status}`);
     }
 
+    const result = await response.json();
+    
+    // Store token for API requests
+    if (result.token) {
+      localStorage.setItem('admin_token', result.token);
+    }
+    
     // Set authentication state
     sessionManager.setAuthenticated(true);
-    return response.json();
+    return result;
   },
 
   // Admin logout
   logout: async () => {
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+    const token = localStorage.getItem('admin_token');
+    
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
     const response = await fetch(`${apiUrl}/admin/logout`, {
       method: 'POST',
       credentials: 'include', // Include cookies for session management
+      headers: headers,
     });
 
     if (!response.ok) {
@@ -38,7 +56,8 @@ export const adminService = {
       throw new Error(errorData.error || `HTTP ${response.status}`);
     }
 
-    // Clear authentication state
+    // Clear token and authentication state
+    localStorage.removeItem('admin_token');
     sessionManager.clearSession();
     return response.json();
   },
@@ -53,8 +72,16 @@ export const adminService = {
 
       // Then check with server
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      const token = localStorage.getItem('admin_token');
+      
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
       const response = await fetch(`${apiUrl}/admin/status`, {
         credentials: 'include',
+        headers: headers,
       });
       
       if (response.ok) {
@@ -72,6 +99,11 @@ export const adminService = {
   // Get session status
   getSessionStatus: () => {
     return sessionManager.getSessionStatus();
+  },
+
+  // Get auth token
+  getAuthToken: () => {
+    return localStorage.getItem('admin_token');
   },
 
   // Health check
