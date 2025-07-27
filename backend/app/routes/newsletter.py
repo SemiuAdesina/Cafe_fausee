@@ -58,6 +58,35 @@ The Café Fausse Team
         print(f"❌ Failed to send welcome email: {e}")
         return False
 
+@newsletter_bp.route('/test-email', methods=['GET'])
+def test_email_config():
+    """Test email configuration"""
+    try:
+        from app import mail
+        from flask_mail import Message
+        import os
+        
+        # Check environment variables
+        mail_server = os.getenv('MAIL_SERVER')
+        mail_username = os.getenv('MAIL_USERNAME')
+        mail_password = os.getenv('MAIL_PASSWORD')
+        
+        config_status = {
+            'mail_server': mail_server,
+            'mail_username': mail_username is not None,
+            'mail_password': mail_password is not None,
+            'mail_app': mail is not None
+        }
+        
+        return jsonify({
+            'message': 'Email configuration test',
+            'config': config_status
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'error': f'Email configuration test failed: {str(e)}'
+        }), 500
+
 @newsletter_bp.route('/', methods=['GET'])
 def test_newsletter():
     return {"message": "Newsletter endpoint is working!"}, 200
@@ -74,13 +103,19 @@ def signup_newsletter():
             return jsonify({'error': 'Invalid email format.'}), 400
         if Newsletter.query.filter_by(email=email).first():
             return jsonify({'error': 'Email already signed up.'}), 409
+        
+        # Create newsletter signup
         newsletter = Newsletter(email=email, signup_date=datetime.now())
         db.session.add(newsletter)
         db.session.commit()
         
-        # Send welcome email
-        print(f"Attempting to send welcome email to: {email}")
-        send_welcome_email(email)
+        # Try to send welcome email (but don't fail if it doesn't work)
+        try:
+            print(f"Attempting to send welcome email to: {email}")
+            send_welcome_email(email)
+        except Exception as email_error:
+            print(f"❌ Email sending failed but signup succeeded: {email_error}")
+            # Continue with success response even if email fails
         
         return jsonify({'message': 'Signed up for newsletter successfully.'}), 201
     except Exception as e:
