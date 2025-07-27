@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { newsletterService } from '../../services/index.js';
 import { showSuccess, showError, formatDate } from '../../services/utils.js';
 import Card from '../Card';
+import SearchFilter from '../SearchFilter';
 import { FiDownload, FiRefreshCw, FiMail, FiUsers } from 'react-icons/fi';
 import '../../styles/Admin.css';
 
@@ -9,8 +10,11 @@ import '../../styles/Admin.css';
 
 const NewsletterManager = () => {
   const [signups, setSignups] = useState([]);
+  const [filteredSignups, setFilteredSignups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState({});
 
   const loadSignups = async () => {
     try {
@@ -23,10 +27,13 @@ const NewsletterManager = () => {
       // Ensure signups is always an array
       if (data && data.signups && Array.isArray(data.signups)) {
         setSignups(data.signups);
+        setFilteredSignups(data.signups);
       } else if (Array.isArray(data)) {
         setSignups(data);
+        setFilteredSignups(data);
       } else {
         setSignups([]);
+        setFilteredSignups([]);
       }
       
     } catch (error) {
@@ -48,6 +55,40 @@ const NewsletterManager = () => {
     } finally {
       setExporting(false);
     }
+  };
+
+  // Filter and search signups
+  useEffect(() => {
+    let filtered = [...signups];
+
+    // Apply search
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(signup =>
+        signup.email?.toLowerCase().includes(term) ||
+        signup.id?.toString().includes(term) ||
+        signup.signup_date?.toLowerCase().includes(term)
+      );
+    }
+
+    // Apply filters
+    if (filters.date) {
+      filtered = filtered.filter(signup => {
+        const signupDate = new Date(signup.signup_date).toDateString();
+        const filterDate = new Date(filters.date).toDateString();
+        return signupDate === filterDate;
+      });
+    }
+
+    setFilteredSignups(filtered);
+  }, [signups, searchTerm, filters]);
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters);
   };
 
   useEffect(() => {
@@ -100,9 +141,27 @@ const NewsletterManager = () => {
         </div>
       </div>
 
+      {/* Search and Filter */}
       <Card>
-        {signups.length === 0 ? (
-          <div className="admin-empty-message">No newsletter signups found.</div>
+        <SearchFilter
+          onSearch={handleSearch}
+          onFilter={handleFilter}
+          placeholder="Search newsletter signups by email, ID, or date..."
+          filters={[
+            {
+              key: 'date',
+              label: 'Signup Date',
+              type: 'date'
+            }
+          ]}
+        />
+      </Card>
+
+      <Card>
+        {filteredSignups.length === 0 ? (
+          <div className="admin-empty-message">
+            {signups.length === 0 ? 'No newsletter signups found.' : 'No signups match your search criteria.'}
+          </div>
         ) : (
           <table className="admin-table">
             <thead>
@@ -113,7 +172,7 @@ const NewsletterManager = () => {
               </tr>
             </thead>
             <tbody>
-              {signups.map((signup) => (
+              {filteredSignups.map((signup) => (
                 <tr key={signup.id}>
                   <td>{signup.id}</td>
                   <td>{signup.email}</td>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FaSearch, FaFilter, FaTimes, FaUtensils, FaWineGlass, FaIceCream, FaLeaf, FaSlidersH } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaTimes, FaUtensils, FaWineGlass, FaIceCream, FaLeaf, FaSlidersH, FaFunnel } from 'react-icons/fa';
 import { GiMeat, GiFishCooked, GiBreadSlice, GiCoffeeCup } from 'react-icons/gi';
 import { MdRestaurantMenu } from 'react-icons/md';
 import '../styles/MenuSearchFilter.css';
@@ -118,7 +118,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
           onClick={() => setShowFilters(!showFilters)}
           className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
         >
-          {showFilters ? <FaFilter /> : <FaSlidersH />}
+          {showFilters ? <FaFunnel /> : <FaFilter />}
         </button>
       </div>
 
