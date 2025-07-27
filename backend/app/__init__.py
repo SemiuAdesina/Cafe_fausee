@@ -48,7 +48,16 @@ def create_app():
     from .routes.menu import menu_bp
     from .routes.gallery import gallery_bp
     from .routes.about import about_bp
-    from .routes.newsletter import newsletter_bp
+    
+    print("Loading newsletter blueprint...")
+    try:
+        from .routes.newsletter import newsletter_bp
+        print("✅ Newsletter blueprint loaded successfully")
+    except Exception as e:
+        print(f"❌ Failed to load newsletter blueprint: {e}")
+        import traceback
+        traceback.print_exc()
+    
     from .routes.email import email_bp
 
     app.register_blueprint(admin_auth_bp)
@@ -56,7 +65,13 @@ def create_app():
     app.register_blueprint(menu_bp, url_prefix='/api/menu')
     app.register_blueprint(gallery_bp, url_prefix='/api/gallery')
     app.register_blueprint(about_bp, url_prefix='/api/about')
-    app.register_blueprint(newsletter_bp, url_prefix='/api/newsletter')
+    
+    try:
+        app.register_blueprint(newsletter_bp, url_prefix='/api/newsletter')
+        print("✅ Newsletter blueprint registered successfully")
+    except Exception as e:
+        print(f"❌ Failed to register newsletter blueprint: {e}")
+    
     app.register_blueprint(email_bp)
 
     @app.route('/api/health')
