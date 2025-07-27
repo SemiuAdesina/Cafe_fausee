@@ -19,27 +19,15 @@ const NewsletterManager = () => {
   const loadSignups = async () => {
     try {
       setLoading(true);
-      console.log('Loading newsletter signups...');
-      
+      // Remove console.log for security
+      // console.log('Loading newsletter signups...');
       const data = await newsletterService.getAllSignups();
-      console.log('Newsletter signups loaded:', data);
-      
-      // Ensure signups is always an array
-      if (data && data.signups && Array.isArray(data.signups)) {
-        setSignups(data.signups);
-        setFilteredSignups(data.signups);
-      } else if (Array.isArray(data)) {
-        setSignups(data);
-        setFilteredSignups(data);
-      } else {
-        setSignups([]);
-        setFilteredSignups([]);
-      }
-      
+      setSignups(data);
+      setFilteredSignups(data);
+      // Remove console.log for security
+      // console.log('Newsletter signups loaded:', data);
     } catch (error) {
-      console.error('Error loading newsletter signups:', error);
-      showError(`Failed to load newsletter signups: ${error.message}`);
-      setSignups([]); // Set empty array on error
+      showError('Failed to load newsletter signups: ' + error.message);
     } finally {
       setLoading(false);
     }

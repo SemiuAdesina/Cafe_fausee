@@ -31,21 +31,11 @@ const AboutManager = () => {
     try {
       setLoading(true);
       const data = await aboutService.getAboutInfo();
-      console.log('About data received:', data); // Debug log
-      // Ensure data is always an array
-      if (Array.isArray(data)) {
-        setAboutData(data);
-      } else if (data && typeof data === 'object') {
-        // If it's a single object, wrap it in an array
-        setAboutData([data]);
-      } else {
-        // If it's null, undefined, or invalid, set empty array
-        setAboutData([]);
-      }
-    } catch (err) {
-      console.error('Error loading about data:', err);
-      showError('Failed to load about information');
-      setAboutData([]); // Ensure it's an array even on error
+      setAboutData(data);
+      // Remove console.log for security
+      // console.log('About data received:', data); // Debug log
+    } catch (error) {
+      showError('Failed to load about data: ' + error.message);
     } finally {
       setLoading(false);
     }

@@ -133,21 +133,57 @@ export const storage = {
   },
 };
 
-// Toast notifications
+// Toast notification functions
 export const showSuccess = (message) => {
-  if (window.showToast) {
-    window.showToast(message, 'success', 4000);
-  } else {
-    console.log('Success:', message);
-  }
+  // Remove console.log for security
+  // console.log('Success:', message);
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-success';
+  toast.textContent = message;
+  
+  // Add to page
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  // Remove toast after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
 };
 
 export const showError = (message) => {
-  if (window.showToast) {
-    window.showToast(message, 'error', 6000);
-  } else {
-    console.error('Error:', message);
-  }
+  // Remove console.log for security
+  // console.log('Error:', message);
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-error';
+  toast.textContent = message;
+  
+  // Add to page
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  // Remove toast after 5 seconds for errors
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 5000);
 };
 
 export const showWarning = (message) => {
@@ -159,17 +195,47 @@ export const showWarning = (message) => {
 };
 
 export const showInfo = (message) => {
-  if (window.showToast) {
-    window.showToast(message, 'info', 4000);
-  } else {
-    console.log('Info:', message);
-  }
+  // Remove console.log for security
+  // console.log('Info:', message);
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-info';
+  toast.textContent = message;
+  
+  // Add to page
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  // Remove toast after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
 };
 
 export const showLoading = (message) => {
-  if (window.showToast) {
-    window.showToast(message, 'info', 2000);
-  } else {
-    console.log('Loading:', message);
-  }
+  // Remove console.log for security
+  // console.log('Loading:', message);
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-loading';
+  toast.textContent = message;
+  
+  // Add to page
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  return toast;
 }; 

@@ -60,7 +60,8 @@ const Menu = () => {
           setUseBackend(false);
         }
       } catch (err) {
-        console.log('Using static menu data:', err.message);
+        // Remove console.log for security
+        // console.log('Using static menu data:', err.message);
         setUseBackend(false);
       } finally {
         setLoading(false);

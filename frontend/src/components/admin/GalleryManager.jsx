@@ -90,28 +90,23 @@ const GalleryManager = () => {
   const loadGalleryData = async () => {
     try {
       setLoading(true);
-      console.log('Loading gallery data...');
+      // Remove console.log for security
+      // console.log('Loading gallery data...');
       
-      const [imagesData, awardsData, reviewsData] = await Promise.all([
-        galleryService.getAllImages(),
-        galleryService.getAllAwards(),
-        galleryService.getAllReviews()
+      const [imagesData, awardsData, reviewsData] = await Promise.allSettled([
+        galleryService.getGalleryImages(),
+        galleryService.getGalleryAwards(),
+        galleryService.getGalleryReviews()
       ]);
       
-      console.log('Gallery data loaded:', { imagesData, awardsData, reviewsData });
+      setImages(imagesData.status === 'fulfilled' ? imagesData.value : []);
+      setAwards(awardsData.status === 'fulfilled' ? awardsData.value : []);
+      setReviews(reviewsData.status === 'fulfilled' ? reviewsData.value : []);
       
-      // Ensure all data are arrays
-      setImages(Array.isArray(imagesData) ? imagesData : []);
-      setAwards(Array.isArray(awardsData) ? awardsData : []);
-      setReviews(Array.isArray(reviewsData) ? reviewsData : []);
-      
-    } catch (err) {
-      console.error('Error loading gallery data:', err);
-      showError(`Failed to load gallery data: ${err.message}`);
-      // Set empty arrays on error to prevent further issues
-      setImages([]);
-      setAwards([]);
-      setReviews([]);
+      // Remove console.log for security
+      // console.log('Gallery data loaded:', { imagesData, awardsData, reviewsData });
+    } catch (error) {
+      showError('Failed to load gallery data: ' + error.message);
     } finally {
       setLoading(false);
     }

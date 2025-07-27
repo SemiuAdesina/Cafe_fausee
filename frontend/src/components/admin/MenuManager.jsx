@@ -26,18 +26,14 @@ const MenuManager = () => {
   const loadMenuItems = async () => {
     try {
       setLoading(true);
-      console.log('Loading menu items...');
-      
+      // Remove console.log for security
+      // console.log('Loading menu items...');
       const items = await menuService.getAllMenuItems();
-      console.log('Menu items loaded:', items);
-      
-      // Ensure items is always an array
-      setMenuItems(Array.isArray(items) ? items : []);
-      
-    } catch (err) {
-      console.error('Error loading menu items:', err);
-      showError(`Failed to load menu items: ${err.message}`);
-      setMenuItems([]); // Set empty array on error
+      setMenuItems(items);
+      // Remove console.log for security
+      // console.log('Menu items loaded:', items);
+    } catch (error) {
+      showError('Failed to load menu items: ' + error.message);
     } finally {
       setLoading(false);
     }

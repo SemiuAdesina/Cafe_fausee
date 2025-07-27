@@ -36,7 +36,8 @@ const About = () => {
           setUseBackend(false);
         }
       } catch (err) {
-        console.log('Using static about data:', err.message);
+        // Remove console.log for security
+        // console.log('Using static about data:', err.message);
         setAboutData(staticAbout);
         setUseBackend(false);
       } finally {

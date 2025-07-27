@@ -62,7 +62,8 @@ const Gallery = () => {
           setUseBackend(false);
         }
       } catch (err) {
-        console.log('Using static gallery data:', err.message);
+        // Remove console.log for security
+        // console.log('Using static gallery data:', err.message);
         setImages(staticImages);
         setAwards(staticAwards);
         setReviews(staticReviews);
