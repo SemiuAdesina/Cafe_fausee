@@ -143,6 +143,13 @@ def signup_newsletter():
         
         print(f"✅ Newsletter signup successful for: {email}")
         
+        # Send welcome email
+        try:
+            send_welcome_email(email)
+        except Exception as email_error:
+            print(f"⚠️ Email sending failed but signup succeeded: {email_error}")
+            # Don't fail the signup if email fails
+        
         return jsonify({'message': 'Signed up for newsletter successfully.'}), 201
         
     except Exception as e:
