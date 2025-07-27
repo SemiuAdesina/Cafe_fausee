@@ -12,6 +12,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.Config')
     
+    # Configure session for production
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    
     # Custom CORS handler to ensure credentials are properly handled
     @app.after_request
     def after_request(response):

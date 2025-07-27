@@ -63,3 +63,17 @@ def create_admin():
         
     except Exception as e:
         return jsonify({'error': f'Failed to create admin: {str(e)}'}), 500
+
+@admin_auth_bp.route('/api/admin/debug-session', methods=['GET'])
+def debug_session():
+    """Debug session information"""
+    try:
+        session_data = {
+            'session_id': session.get('admin_id'),
+            'session_keys': list(session.keys()),
+            'cookies': dict(request.cookies),
+            'headers': dict(request.headers)
+        }
+        return jsonify(session_data), 200
+    except Exception as e:
+        return jsonify({'error': f'Session debug failed: {str(e)}'}), 500
