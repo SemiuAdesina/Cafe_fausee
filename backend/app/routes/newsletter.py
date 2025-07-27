@@ -66,8 +66,10 @@ The Café Fausse Team
 def test_database():
     """Test database connection and Newsletter table"""
     try:
+        from sqlalchemy import text
+        
         # Test database connection
-        db.session.execute('SELECT 1')
+        db.session.execute(text('SELECT 1'))
         
         # Test Newsletter table
         count = Newsletter.query.count()
@@ -90,10 +92,10 @@ def test_email_config():
         from flask_mail import Message
         import os
         
-        # Check environment variables
+        # Check environment variables (using the correct names from config)
         mail_server = os.getenv('MAIL_SERVER')
-        mail_username = os.getenv('MAIL_USERNAME')
-        mail_password = os.getenv('MAIL_PASSWORD')
+        mail_username = os.getenv('NOTIFY_EMAIL_USER')  # Updated to match config
+        mail_password = os.getenv('NOTIFY_EMAIL_PASS')  # Updated to match config
         
         config_status = {
             'mail_server': mail_server,
