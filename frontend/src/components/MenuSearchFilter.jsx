@@ -109,7 +109,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
               onClick={() => setSearchTerm('')}
               className="clear-search-btn"
             >
-              <FaTimes />
+              <FaFunnel />
             </button>
           )}
         </div>
@@ -118,7 +118,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
           onClick={() => setShowFilters(!showFilters)}
           className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
         >
-          {showFilters ? <FaTimes /> : <FaSlidersH />}
+          {showFilters ? <FaFunnel /> : <FaSlidersH />}
         </button>
       </div>
 
@@ -199,7 +199,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
           {/* Clear Filters */}
           <div className="filter-actions">
             <button onClick={clearFilters} className="clear-filters-btn">
-              <FaTimes />
+              <FaFunnel />
               Clear All Filters
             </button>
           </div>
@@ -214,7 +214,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span className="active-filter-tag">
               Search: "{searchTerm}"
               <button onClick={() => setSearchTerm('')} className="remove-filter-btn">
-                <FaTimes />
+                <FaFunnel />
               </button>
             </span>
           )}
@@ -222,7 +222,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span key={category} className="active-filter-tag">
               {category}
               <button onClick={() => toggleCategory(category)} className="remove-filter-btn">
-                <FaTimes />
+                <FaFunnel />
               </button>
             </span>
           ))}
@@ -230,7 +230,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span className="active-filter-tag">
               ${priceRange.min} - ${priceRange.max}
               <button onClick={() => setPriceRange({ min: 0, max: 50 })} className="remove-filter-btn">
-                <FaTimes />
+                <FaFunnel />
               </button>
             </span>
           )}
