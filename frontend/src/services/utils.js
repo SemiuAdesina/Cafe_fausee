@@ -135,55 +135,23 @@ export const storage = {
 
 // Toast notification functions
 export const showSuccess = (message) => {
-  // Remove console.log for security
-  // console.log('Success:', message);
-  
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = 'toast toast-success';
-  toast.textContent = message;
-  
-  // Add to page
-  document.body.appendChild(toast);
-  
-  // Show toast
-  setTimeout(() => {
-    toast.classList.add('show');
-  }, 100);
-  
-  // Remove toast after 3 seconds
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 300);
-  }, 3000);
+  console.log('showSuccess called:', message);
+  console.log('window.showToast available:', !!window.showToast);
+  if (window.showToast) {
+    window.showToast(message, 'success', 3000);
+  } else {
+    console.log('Success:', message);
+  }
 };
 
 export const showError = (message) => {
-  // Remove console.log for security
-  // console.log('Error:', message);
-  
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = 'toast toast-error';
-  toast.textContent = message;
-  
-  // Add to page
-  document.body.appendChild(toast);
-  
-  // Show toast
-  setTimeout(() => {
-    toast.classList.add('show');
-  }, 100);
-  
-  // Remove toast after 5 seconds for errors
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 300);
-  }, 5000);
+  console.log('showError called:', message);
+  console.log('window.showToast available:', !!window.showToast);
+  if (window.showToast) {
+    window.showToast(message, 'error', 5000);
+  } else {
+    console.error('Error:', message);
+  }
 };
 
 export const showWarning = (message) => {
@@ -195,47 +163,18 @@ export const showWarning = (message) => {
 };
 
 export const showInfo = (message) => {
-  // Remove console.log for security
-  // console.log('Info:', message);
-  
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = 'toast toast-info';
-  toast.textContent = message;
-  
-  // Add to page
-  document.body.appendChild(toast);
-  
-  // Show toast
-  setTimeout(() => {
-    toast.classList.add('show');
-  }, 100);
-  
-  // Remove toast after 3 seconds
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 300);
-  }, 3000);
+  if (window.showToast) {
+    window.showToast(message, 'info', 3000);
+  } else {
+    console.log('Info:', message);
+  }
 };
 
 export const showLoading = (message) => {
-  // Remove console.log for security
-  // console.log('Loading:', message);
-  
-  // Create toast element
-  const toast = document.createElement('div');
-  toast.className = 'toast toast-loading';
-  toast.textContent = message;
-  
-  // Add to page
-  document.body.appendChild(toast);
-  
-  // Show toast
-  setTimeout(() => {
-    toast.classList.add('show');
-  }, 100);
-  
-  return toast;
+  if (window.showToast) {
+    return window.showToast(message, 'loading', 0); // 0 means no auto-remove
+  } else {
+    console.log('Loading:', message);
+    return null;
+  }
 }; 

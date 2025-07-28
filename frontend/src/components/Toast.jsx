@@ -7,6 +7,7 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
+    console.log('Toast mounted:', { message, type, duration });
     const timer = setTimeout(() => {
       handleClose();
     }, duration);
@@ -15,6 +16,7 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
   }, [duration]);
 
   const handleClose = () => {
+    console.log('Toast closing:', message);
     setIsExiting(true);
     setTimeout(() => {
       setIsVisible(false);
