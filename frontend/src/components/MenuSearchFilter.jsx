@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FaSearch, FaFilter, FaTimes, FaUtensils, FaWineGlass, FaIceCream, FaLeaf, FaSlidersH, FaFunnel } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaTimes, FaUtensils, FaWineGlass, FaIceCream, FaLeaf, FaSlidersH } from 'react-icons/fa';
 import { GiMeat, GiFishCooked, GiBreadSlice, GiCoffeeCup } from 'react-icons/gi';
 import { MdRestaurantMenu } from 'react-icons/md';
 import '../styles/MenuSearchFilter.css';
@@ -109,7 +109,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
               onClick={() => setSearchTerm('')}
               className="clear-search-btn"
             >
-              <FaFunnel />
+              <FaFilter />
             </button>
           )}
         </div>
@@ -118,7 +118,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
           onClick={() => setShowFilters(!showFilters)}
           className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
         >
-          {showFilters ? <FaFunnel /> : <FaSlidersH />}
+          {showFilters ? <FaFilter /> : <FaSlidersH />}
         </button>
       </div>
 
@@ -199,7 +199,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
           {/* Clear Filters */}
           <div className="filter-actions">
             <button onClick={clearFilters} className="clear-filters-btn">
-              <FaFunnel />
+              <FaFilter />
               Clear All Filters
             </button>
           </div>
@@ -214,7 +214,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span className="active-filter-tag">
               Search: "{searchTerm}"
               <button onClick={() => setSearchTerm('')} className="remove-filter-btn">
-                <FaFunnel />
+                <FaFilter />
               </button>
             </span>
           )}
@@ -222,7 +222,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span key={category} className="active-filter-tag">
               {category}
               <button onClick={() => toggleCategory(category)} className="remove-filter-btn">
-                <FaFunnel />
+                <FaFilter />
               </button>
             </span>
           ))}
@@ -230,7 +230,7 @@ const MenuSearchFilter = ({ onFilterChange, menuData }) => {
             <span className="active-filter-tag">
               ${priceRange.min} - ${priceRange.max}
               <button onClick={() => setPriceRange({ min: 0, max: 50 })} className="remove-filter-btn">
-                <FaFunnel />
+                <FaFilter />
               </button>
             </span>
           )}
